@@ -1,3 +1,5 @@
+Name:RAJASHEKAR KATTA Company:CODETECH IT SOLUTIONS ID: CT08DBJ Domain:Python Programming
+
 Project Overview: Automated Sales Report Generation
 This project involves creating an automated report generation system using Python, which reads data from a CSV file, processes the data, generates a bar chart, and compiles everything into a PDF report.
 
