@@ -1,0 +1,37 @@
+#DELIVERABLE: A SCRIPT AND A SAMPLE REPORT.
+import pandas as pd
+import matplotlib.pyplot as plt
+from fpdf import FPDF
+
+# Load data
+data = pd.read_csv("sales_data.csv")  # Example CSV file
+summary = data.groupby("Product")["Revenue"].sum().reset_index()
+
+# Create a bar chart
+plt.figure(figsize=(10, 6))
+plt.bar(summary["Product"], summary["Revenue"], color="skyblue")
+plt.title("Revenue by Product")
+plt.xlabel("Product")
+plt.ylabel("Revenue")
+plt.savefig("bar_chart.png")
+plt.close()
+
+# Create a PDF report
+pdf = FPDF()
+pdf.add_page()
+pdf.set_font("Arial", size=12)
+pdf.cell(200, 10, txt="Sales Summary Report", ln=True, align="C")
+pdf.cell(200, 10, txt=" ", ln=True)  # Spacer
+
+# Add chart
+pdf.image("bar_chart.png", x=50, y=30, w=110)
+pdf.ln(85)  # Line break to move cursor after chart
+
+# Add summary data
+pdf.cell(200, 10, txt="Revenue Summary by Product:", ln=True)
+for _, row in summary.iterrows():
+    pdf.cell(200, 10, txt=f"{row['Product']}: ${row['Revenue']:.2f}", ln=True)
+
+# Save the report
+pdf.output("sales_summary_report.pdf")
+print("Report generated successfully!")
